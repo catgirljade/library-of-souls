@@ -1,6 +1,7 @@
 package com.playmonumenta.libraryofsouls;
 
 import com.goncalomb.bukkit.mylib.reflect.NBTTagCompound;
+import java.util.function.Consumer;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -29,5 +30,5 @@ public interface Soul extends SoulGroup {
 	/* Whether the mob has the tag "Elite" or not */
 	boolean isElite();
 
-	Entity summon(Location loc);
+	Entity summon(Location loc, Consumer<Entity> preSpawnActon);
 }

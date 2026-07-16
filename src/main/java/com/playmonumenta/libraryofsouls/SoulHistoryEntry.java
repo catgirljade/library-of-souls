@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Consumer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -219,7 +220,7 @@ public class SoulHistoryEntry implements Soul {
 	}
 
 	@Override
-	public List<Entity> summonGroup(Random random, World world, BoundingBox spawnBb) {
+	public List<Entity> summonGroup(Random random, World world, BoundingBox spawnBb, Consumer<Entity> preSpawnActon) {
 		List<Entity> result = new ArrayList<>();
 		if (mWidth == null || mHeight == null) {
 			return result;
@@ -229,7 +230,7 @@ public class SoulHistoryEntry implements Soul {
 		double z = spawnBb.getMinZ() + random.nextDouble() * (spawnBb.getMaxZ() - spawnBb.getMinZ());
 		Location loc = new Location(world, x, y, z);
 		if (!Utils.insideBlocks(loc, mWidth, mHeight)) {
-			result.add(summon(loc));
+			result.add(summon(loc, preSpawnActon));
 		}
 		return result;
 	}
@@ -319,8 +320,8 @@ public class SoulHistoryEntry implements Soul {
 	}
 
 	@Override
-	public Entity summon(Location loc) {
-		Entity entity = EntityNBT.fromEntityData(mNBT).spawn(loc);
+	public Entity summon(Location loc, Consumer<Entity> preSpawnActon) {
+		Entity entity = EntityNBT.fromEntityData(mNBT).spawn(loc, preSpawnActon);
 		if (entity instanceof ArmorStand armorStand) {
 			// equivalent of setting DisabledSlots: 4144959
 			for (EquipmentSlot slot : EquipmentSlot.values()) {

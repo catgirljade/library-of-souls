@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Consumer;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -227,7 +228,7 @@ public class SoulPartyHistoryEntry implements SoulGroup {
 	}
 
 	@Override
-	public List<Entity> summonGroup(Random random, World world, BoundingBox spawnBb) {
+	public List<Entity> summonGroup(Random random, World world, BoundingBox spawnBb, Consumer<Entity> preSpawnActon) {
 		List<Entity> result = new ArrayList<>();
 
 		for (Map.Entry<String, Integer> entry : mEntryCounts.entrySet()) {
@@ -235,7 +236,7 @@ public class SoulPartyHistoryEntry implements SoulGroup {
 			SoulGroup group = SoulsDatabase.getInstance().getSoulGroup(entry.getKey());
 			if (group != null) {
 				for (int i = 0; i < entryCount; i++) {
-					result.addAll(group.summonGroup(random, world, spawnBb));
+					result.addAll(group.summonGroup(random, world, spawnBb, preSpawnActon));
 				}
 			}
 		}

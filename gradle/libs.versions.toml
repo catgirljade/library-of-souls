@@ -5,7 +5,7 @@ log4j = "2.17.1"
 mixinapi = "2.0.0"
 monumenta-common = "1.0.0"
 nbtapi = "2.12.0-SNAPSHOT"
-nbteditor = "4.1"
+nbteditor = "4.4"
 redissync = "6.0.0"
 
 [libraries]

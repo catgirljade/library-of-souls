@@ -20,6 +20,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Consumer;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
@@ -167,8 +168,8 @@ public class SoulEntry implements Soul, BestiaryEntryInterface {
 	}
 
 	@Override
-	public List<Entity> summonGroup(Random random, World world, BoundingBox spawnBb) {
-		return mHistory.get(0).summonGroup(random, world, spawnBb);
+	public List<Entity> summonGroup(Random random, World world, BoundingBox spawnBb, Consumer<Entity> preSpawnActon) {
+		return mHistory.get(0).summonGroup(random, world, spawnBb, preSpawnActon);
 	}
 
 	/*
@@ -220,8 +221,8 @@ public class SoulEntry implements Soul, BestiaryEntryInterface {
 	}
 
 	@Override
-	public Entity summon(Location loc) {
-		return mHistory.get(0).summon(loc);
+	public Entity summon(Location loc, Consumer<Entity> preSpawnActon) {
+		return mHistory.get(0).summon(loc, preSpawnActon);
 	}
 
 	public void setLore(List<Component> lore, Player player) {

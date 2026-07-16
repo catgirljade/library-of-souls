@@ -168,7 +168,8 @@ public class LibraryOfSoulsCommand {
 			.withArguments(locationArg)
 			.withArguments(new StringArgument("mobLabel").replaceSuggestions(LIST_MOBS_FUNCTION))
 			.executes((sender, args) -> {
-				getSoul(args.getByArgument(new StringArgument("mobLabel").replaceSuggestions(LIST_MOBS_FUNCTION))).summon(args.getByArgument(locationArg));
+				getSoul(args.getByArgument(new StringArgument("mobLabel").replaceSuggestions(LIST_MOBS_FUNCTION))).summon(args.getByArgument(locationArg), e -> {
+				});
 			})
 			.register();
 
@@ -183,7 +184,8 @@ public class LibraryOfSoulsCommand {
 				Location pos1 = args.getByArgument(pos1Arg);
 				Location pos2 = args.getByArgument(pos2Arg);
 				BoundingBox bb = BoundingBox.of(pos1, pos2);
-				getSoulGroup(args.getByArgument(new ScoreHolderArgument.Single("groupLabel").replaceSuggestions(LIST_SOUL_GROUPS_FUNCTION))).summonGroup(new Random(), pos1.getWorld(), bb);
+				getSoulGroup(args.getByArgument(new ScoreHolderArgument.Single("groupLabel").replaceSuggestions(LIST_SOUL_GROUPS_FUNCTION))).summonGroup(new Random(), pos1.getWorld(), bb, e -> {
+				});
 			})
 			.register();
 

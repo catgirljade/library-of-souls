@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Consumer;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.BoundingBox;
@@ -35,5 +36,5 @@ public interface SoulGroup {
 	@Nullable Double getHeight();
 
 	/* Attempt to summon the soul group; may summon fewer mobs if spawn conditions are not met */
-	List<Entity> summonGroup(Random random, World world, BoundingBox spawnBb);
+	List<Entity> summonGroup(Random random, World world, BoundingBox spawnBb, Consumer<Entity> preSpawnActon);
 }

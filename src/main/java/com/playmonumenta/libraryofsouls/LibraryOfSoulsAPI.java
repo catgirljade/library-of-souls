@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Consumer;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -15,12 +16,17 @@ public class LibraryOfSoulsAPI {
 	public static final String SOUL_POOL_PREFIX = "~";
 
 	public static @Nullable Entity summon(Location loc, String soulName) {
+		return summon(loc, soulName, e -> {
+		});
+	}
+
+	public static @Nullable Entity summon(Location loc, String soulName, Consumer<Entity> preSpawnActon) {
 		SoulsDatabase db = SoulsDatabase.getInstance();
 		SoulEntry soul = db.getSoul(soulName);
 		if (soul == null) {
 			return null;
 		}
-		return soul.summon(loc);
+		return soul.summon(loc, preSpawnActon);
 	}
 
 	public static Set<String> getSoulNames() {

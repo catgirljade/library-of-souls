@@ -14,6 +14,7 @@ import java.util.NavigableMap;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeMap;
+import java.util.function.Consumer;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -231,7 +232,7 @@ public class SoulPoolHistoryEntry implements SoulGroup {
 	}
 
 	@Override
-	public List<Entity> summonGroup(Random random, World world, BoundingBox spawnBb) {
+	public List<Entity> summonGroup(Random random, World world, BoundingBox spawnBb, Consumer<Entity> preSpawnActon) {
 		List<Entity> result = new ArrayList<>();
 
 		if (mTotalWeight == 0) {
@@ -241,7 +242,7 @@ public class SoulPoolHistoryEntry implements SoulGroup {
 		String selectedLabel = mNavigableMap.higherEntry(randomValue).getValue();
 		SoulGroup selected = SoulsDatabase.getInstance().getSoulGroup(selectedLabel);
 		if (selected != null) {
-			result.addAll(selected.summonGroup(random, world, spawnBb));
+			result.addAll(selected.summonGroup(random, world, spawnBb, preSpawnActon));
 		}
 
 		return result;

@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+import java.util.function.Consumer;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -108,8 +109,8 @@ public class SoulPartyEntry implements SoulGroup {
 	}
 
 	@Override
-	public List<Entity> summonGroup(Random random, World world, BoundingBox spawnBb) {
-		return mHistory.get(0).summonGroup(random, world, spawnBb);
+	public List<Entity> summonGroup(Random random, World world, BoundingBox spawnBb, Consumer<Entity> preSpawnActon) {
+		return mHistory.get(0).summonGroup(random, world, spawnBb, preSpawnActon);
 	}
 
 	/*
