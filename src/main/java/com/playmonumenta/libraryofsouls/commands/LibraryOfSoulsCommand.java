@@ -426,14 +426,15 @@ public class LibraryOfSoulsCommand {
 				health = Math.round(health);
 			}
 			healthVar.set(String.valueOf(health), player);
-			Attribute attribute = mobNBT.getAttributes().getAttribute(AttributeType.MAX_HEALTH);
+			AttributeContainer attributes = mobNBT.getAttributes();
+			Attribute attribute = attributes.getAttribute(AttributeType.MAX_HEALTH);
 			double maxHealth = attribute.getBase();
 			maxHealth *= multiplier;
 			if (maxHealth > 5) {
 				maxHealth = maxHealth - (maxHealth % 5);
 			}
 			attribute.setBase(maxHealth);
-			book.saveBook();
+			mobNBT.setAttributes(attributes);
 			return DoubleDoublePair.of(originalHealth, health);
 		}),
 		ATTACK_DAMAGE((book, multiplier, player) -> {
@@ -584,15 +585,19 @@ public class LibraryOfSoulsCommand {
 				if (!(block.getState() instanceof Chest chest)) {
 					throw CommandAPI.failWithString("Not a chest!");
 				}
-				for (ItemStack item : chest.getBlockInventory()) {
+				Player player = getPlayer(sender);
+				Inventory inventory = chest.getBlockInventory();
+				ArrayList<BookOfSouls> souls = new ArrayList<>(inventory.getSize());
+				for (ItemStack item : inventory) {
 					if (item == null) {
 						continue;
 					}
-					Player player = getPlayer(sender);
-					BookOfSouls bos = getBos(item);
-
-					SoulsDatabase.getInstance().update(player, bos);
+					if (BookOfSouls.isValidBook(item)) {
+						BookOfSouls bos = getBos(item);
+						souls.add(bos);
+					}
 				}
+				SoulsDatabase.getInstance().update(player, souls.toArray(new BookOfSouls[0]));
 			})
 			.register();
 
