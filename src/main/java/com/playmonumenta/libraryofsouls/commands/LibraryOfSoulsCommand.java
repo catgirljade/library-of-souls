@@ -593,7 +593,8 @@ public class LibraryOfSoulsCommand {
 
 					SoulsDatabase.getInstance().update(player, bos);
 				}
-			});
+			})
+			.register();
 
 		/* los del <name> */
 		new CommandAPICommand(COMMAND)
